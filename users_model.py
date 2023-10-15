@@ -1,9 +1,16 @@
-import pyodbc
+from dotenv import load_dotenv
+import os
 from sqlalchemy import create_engine
-import pandas as pd
 
 def connect_db():
-    engine = create_engine('mysql+mysqlconnector://root:l1a2n3e4s5r6a7@localhost/firstToPython')
+    db_username = os.getenv("DB_USERNAME")
+    db_secret = os.getenv("DB_SECRET")
+    db_server = os.getenv("DB_SERVER")
+    db_name = os.getenv("DB_NAME")
+
+    connnection_string = 'mysql+mysqlconnector://' + db_username + ':' + db_secret + '@' + db_server + '/' + db_name
+
+    engine = create_engine(connnection_string)
     return engine.connect()
 
 def transform(data):
@@ -15,9 +22,13 @@ def transform(data):
     return data_json
 
 def get_users():
-    connection = connect_db()
+    try:
+        connection = connect_db()
 
-    users = connection.execute("SELECT name, is_active, is_rich FROM users where is_deleted = %s", 0)
+        users = connection.execute("SELECT name, is_active, is_rich FROM users where is_deleted = %s", 0)
+    except:
+        return 'process failed'
+    
     return transform(users)
 
 def get_user(user_id):
