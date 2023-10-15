@@ -1,18 +1,19 @@
-from flask import Flask
-from flask import url_for
-from flask import request
-from flask import jsonify
+from flask import (
+    Flask,
+    url_for,
+    request,
+    jsonify
+)
 from markupsafe import escape
-import pyodbc
 from sqlalchemy import create_engine
-import pandas as pd
-from users_model import get_users
-from users_model import get_user
-from users_model import create_user
-from users_model import update_user
-from users_model import delete_user
+from users_model import (
+    get_user,
+    get_users,
+    create_user,
+    update_user,
+    delete_user
+)
 import json
-# import mysql.connector as sql
 
 app = Flask(__name__)
 
