@@ -6,13 +6,15 @@ from flask import (
 )
 from markupsafe import escape
 from sqlalchemy import create_engine
-from users_model import (
-    get_user,
-    get_users,
-    create_user,
-    update_user,
-    delete_user
-)
+from users_model import UserModel
+# from UserModel import get_users
+# from users_model import (
+#     get_user,
+#     get_users,
+#     create_user,
+#     update_user,
+#     delete_user
+# )
 import json
 
 app = Flask(__name__)
@@ -78,25 +80,35 @@ def api_test(user_id):
 
 @app.get('/api/users')
 def api_get_users():
-    users = get_users()
+    model = UserModel()
+    
+    users = model.get_users()
     return jsonify(users)
 
 @app.get('/api/user/<int:user_id>')
 def api_get_user(user_id):
-    user = get_user(user_id)
+    model = UserModel()
+
+    user = model.get_user(user_id)
     return jsonify(user)
 
 @app.post('/api/user/create')
 def api_create_user():
-    status = create_user(request.form)
+    model = UserModel()
+
+    status = model.create_user(request.form)
     return status
 
 @app.post('/api/user/update/<int:user_id>')
 def api_update_user(user_id):
-    user = update_user(user_id, request.form)
+    model = UserModel()
+
+    user = model.update_user(user_id, request.form)
     return user
 
 @app.get('/api/user/delete/<int:user_id>')
 def api_delete_user(user_id):
-    status = delete_user(user_id)
+    model = UserModel()
+
+    status = model.delete_user(user_id)
     return status
