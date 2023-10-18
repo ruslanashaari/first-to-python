@@ -7,15 +7,6 @@ from flask import (
 from markupsafe import escape
 from sqlalchemy import create_engine
 from users_model import UserModel
-# from UserModel import get_users
-# from users_model import (
-#     get_user,
-#     get_users,
-#     create_user,
-#     update_user,
-#     delete_user
-# )
-import json
 
 app = Flask(__name__)
 
